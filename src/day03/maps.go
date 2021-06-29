@@ -29,6 +29,7 @@ func main() {
 	if value, flag = map3["agee"]; flag {
 		fmt.Println(value)
 	} else {
+		fmt.Println(value, flag)
 		fmt.Println("Key does not exit")
 	}
 

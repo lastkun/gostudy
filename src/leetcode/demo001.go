@@ -14,12 +14,12 @@ func main() {
 }
 
 func result(s string) int {
-	lastOccurred := make(map[byte]int)
+	lastOccurred := make(map[rune]int)
 	start := 0
 	maxLength := 0
 
 	// 遍历字符串
-	for i, ch := range []byte(s) {
+	for i, ch := range []rune(s) {
 		//start 记录最长不重复字串的第一个字符的下表 如果在下一次遍历的时候 发现存在了当前遍历到的字符  并且这个字符的下标大于或者等于start
 		//(即当前遍历到的字符和start位置对应的字符相同，要把start后移一位)
 		if lastValue, temp := lastOccurred[ch]; temp && lastValue >= start {
