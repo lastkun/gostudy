@@ -20,13 +20,31 @@ func (node *Node) SetValue(value int) {
 	node.Value = value
 }
 
+//
+//func (node *Node) Traverse() {
+//	if node == nil {
+//		return
+//	}
+//	node.Left.Traverse()
+//	node.Print()
+//	node.Right.Traverse()
+//}
+
 func (node *Node) Traverse() {
+	node.TraverseFunc(func(node *Node) {
+		node.Print()
+	})
+	fmt.Println()
+}
+
+// 函数式编程
+func (node *Node) TraverseFunc(f func(*Node)) {
 	if node == nil {
 		return
 	}
-	node.Left.Traverse()
-	node.Print()
-	node.Right.Traverse()
+	node.Left.TraverseFunc(f)
+	f(node)
+	node.Right.TraverseFunc(f)
 }
 
 func CreateNode(value int) *Node {

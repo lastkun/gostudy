@@ -41,6 +41,8 @@ func download(r Retriever) string {
 
 func main() {
 	//如果方法的实现的接收者并不是指针类型的，post不能修改对应内容
-	r := retriever.Retriever{"test rec"}
-	fmt.Println(session(&r))
+	r := &retriever.Retriever{"test rec"}
+	fmt.Println(r)
+	fmt.Println(session(r))
+
 }
