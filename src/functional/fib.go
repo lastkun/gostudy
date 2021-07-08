@@ -1,4 +1,4 @@
-package main
+package functional
 
 import (
 	"bufio"
@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func fibonacci() intGen {
+func Fibonacci() intGen {
 	a, b := 0, 1
 	// 每次返回左边的数1,1,2,3,5,8
 	return func() int {
@@ -34,9 +34,4 @@ func printFileContents(reader io.Reader) {
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
 	}
-}
-
-func main() {
-	gen := fibonacci()
-	printFileContents(gen)
 }
