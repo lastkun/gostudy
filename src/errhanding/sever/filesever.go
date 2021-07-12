@@ -13,6 +13,11 @@ func errWrapper(handler appHandler) func(http.ResponseWriter, *http.Request) {
 	return func(writer http.ResponseWriter, req *http.Request) {
 		e := handler(writer, req)
 		if e != nil {
+			if userErr, ok := e.(userError); ok {
+				http.Error(writer, userErr.Message(), http.StatusBadRequest)
+				return
+			}
+
 			code := http.StatusOK
 			switch {
 			case os.IsNotExist(e):
@@ -23,6 +28,11 @@ func errWrapper(handler appHandler) func(http.ResponseWriter, *http.Request) {
 			http.Error(writer, http.StatusText(code), code)
 		}
 	}
+}
+
+type userError interface {
+	error
+	Message() string //给用户展示
 }
 
 func main() {
