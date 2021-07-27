@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 /**
   题目：寻找最长不含有重复字符的字串
   思路：
@@ -9,11 +7,8 @@ import "fmt"
 		在map中 key相同的话  后面设置的会替换掉前面的 不会重复
 
 */
-func main() {
-	fmt.Println(result("sddfgh")) //s:0 d:2 f:3 g:4 h:5
-}
 
-func result(s string) int {
+func subStr(s string) int {
 	lastOccurred := make(map[rune]int)
 	start := 0
 	maxLength := 0
@@ -34,6 +29,6 @@ func result(s string) int {
 		lastOccurred[ch] = i
 	}
 
-	fmt.Println(lastOccurred)
+	//fmt.Println(lastOccurred)
 	return maxLength
 }

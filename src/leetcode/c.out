@@ -1,0 +1,8 @@
+mode: set
+lib/leetcode/demo001.go:13.27,19.31 4 1
+lib/leetcode/demo001.go:35.2,35.18 1 1
+lib/leetcode/demo001.go:19.31,22.70 1 1
+lib/leetcode/demo001.go:27.3,27.28 1 1
+lib/leetcode/demo001.go:31.3,31.23 1 1
+lib/leetcode/demo001.go:22.70,24.4 1 1
+lib/leetcode/demo001.go:27.28,29.4 1 1
