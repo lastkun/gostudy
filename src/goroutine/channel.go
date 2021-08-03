@@ -2,34 +2,48 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"sync"
 )
 
-// chan<- 表示该函数返回的channel是send-only的 使用者只能发送数据给这个channel，不能从里面获得数据
-func createWorker(id int) chan<- int {
-	c := make(chan int)
-	go func() {
-		for {
-			fmt.Printf("Worker %d received %c\n", id, <-c)
-		}
-	}()
+func doWorker(id int, w worker) {
+	for n := range w.in {
+		fmt.Printf("Worker %d received %c\n", id, n)
+		w.done()
+	}
+}
 
-	return c
+type worker struct {
+	in   chan int
+	done func()
+}
+
+func createWorker(id int, wg *sync.WaitGroup) worker {
+	w := worker{
+		in: make(chan int),
+		done: func() {
+			wg.Done()
+		},
+	}
+	go doWorker(id, w)
+	return w
 }
 
 func chanDemo() {
-	var channels [10]chan<- int
+	var workers [10]worker
+	var wg sync.WaitGroup
+	wg.Add(20)
 	for i := 0; i < 10; i++ {
-		channels[i] = createWorker(i)
+		workers[i] = createWorker(i, &wg)
 	}
+
 	// 给channel输送数据
 	for i := 0; i < 10; i++ {
-		channels[i] <- 'a' + i //这里是int类型的接收者，'a'+i转为了ascii码存储
+		workers[i].in <- 'a' + i
 	}
-	// sleep的原因是 main协程执行结束后会销毁所有子协程
-	time.Sleep(time.Millisecond)
-}
 
-func main() {
-	chanDemo()
+	for i, worker := range workers {
+		worker.in <- 'A' + i
+	}
+
+	wg.Wait()
 }
