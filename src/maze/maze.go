@@ -24,7 +24,6 @@ func readMaze(fileName string) [][]int {
 			fmt.Fscanf(file, "%d", &maze[i][j])
 		}
 	}
-
 	return maze
 }
 
